@@ -1,0 +1,60 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/User/Desktop/c++ projects/task5_spellchecking/src/dictionary.h
+iostream
+-
+vector
+-
+list
+-
+algorithm
+-
+string
+-
+stdlib.h
+-
+hashset.h
+C:/Users/User/Desktop/c++ projects/task5_spellchecking/src/hashset.h
+hashset.cpp
+C:/Users/User/Desktop/c++ projects/task5_spellchecking/src/hashset.cpp
+
+C:/Users/User/Desktop/c++ projects/task5_spellchecking/src/hashset.cpp
+hashset.h
+C:/Users/User/Desktop/c++ projects/task5_spellchecking/src/hashset.h
+
+C:/Users/User/Desktop/c++ projects/task5_spellchecking/src/hashset.h
+iostream
+-
+vector
+-
+algorithm
+-
+stdexcept
+-
+
+C:/Users/User/Desktop/c++ projects/task5_spellchecking/src/main.cpp
+iostream
+-
+fstream
+-
+string
+-
+sstream
+-
+cstdlib
+-
+cctype
+-
+set
+-
+iomanip
+-
+dictionary.h
+C:/Users/User/Desktop/c++ projects/task5_spellchecking/src/dictionary.h
+

@@ -15,12 +15,15 @@ using namespace std;
 void lower(string& s);
 string stripPunct(const string& s);
 void checkSpelling(ifstream& in, Dictionary& dict);
-
+void checkTransposing(string s, Dictionary& dict, set<string>& sset);
+void checkRemoval(string s, Dictionary& dict, set<string>& sset);
+void checkReplacement(string s, Dictionary& dict, set<string>& sset);
+void checkInserting(string s, Dictionary& dict, set<string>& sset);
 
 
 // program arguments to run, example: main.exe ../../res/wordlist.txt ../../res/test.txt
 int main(int argc, char* argv[]) {
-	
+
 	// Output usage message if improper command line args were given.
 	if (argc != 3)
     {
@@ -39,13 +42,12 @@ int main(int argc, char* argv[]) {
 	cout << "Loading dictionary, this may take awhile...\n";
 
 	Dictionary d(argv[1]);
-    
 	checkSpelling(inf, d);
-
 	inf.close();
 
 	return EXIT_SUCCESS;
 }
+
 
 void checkSpelling(ifstream& in, Dictionary& dict) {
 
@@ -64,12 +66,77 @@ void checkSpelling(ifstream& in, Dictionary& dict) {
 		string word;
 		while (ss >> word) 
         {
-            // TODO: Complete the spell check of each word
+		    word = stripPunct(word);
+		    lower(word);
+            if(dict.search(word))
+            {
+                std::cout<<word<<": spelled correctly"<<"\n";
+                continue;
+            }
+            checkTransposing(word, dict, totest);
+            checkRemoval(word, dict, totest);
+            checkReplacement(word, dict, totest);
+            checkInserting(word, dict, totest);
+            cout << word << "(" << line_number << "): ";
+            for (auto it = totest.begin(); it != totest.end(); it++)
+                cout << *it << ", ";
+            cout << '\n';
+            totest.clear();
 		}
 	}
 }
 
-void lower(string& s) {
+void checkTransposing(string word, Dictionary& dict, set<string>& totest)
+{
+    for (int i = 0; i < word.length() - 1; i++) {
+        string s = word;
+        char sym = s[i];
+        s[i] = s[i + 1];
+        s[i + 1] = sym;
+        if (dict.search(s))
+            totest.insert(s);
+    }
+}
+
+void checkRemoval(string word, Dictionary& dict, set<string>& totest)
+{
+    for(int i = 0; i < word.length(); i++)
+    {
+        string s = word;
+        s.erase(i, 1);
+        if(dict.search(s))
+            totest.insert(s);
+    }
+}
+
+void checkReplacement(string word, Dictionary& dict, set<string>& totest)
+{
+    for(int i = 0; i < word.length(); i++)
+    {
+        string s = word;
+        for(int j = int('a'); j <= int('z'); j++)
+        {
+            s[i] = char(j);
+            if(dict.search(s))
+                totest.insert(s);
+        }
+    }
+}
+
+void checkInserting(string word, Dictionary& dict, set<string>& totest)
+{
+    for(int i = 0; i <= word.length(); i++)
+        for(int j = int('a'); j <= int('z'); j++)
+        {
+            string s = word;
+            s.insert(i, string(1,char(j)));
+            if(dict.search(s))
+                totest.insert(s);
+        }
+}
+
+void lower(string& s)
+{
 
     // Ensures that a word is lowercase
 	for (int i = 0; i < s.length(); i++)
@@ -78,7 +145,8 @@ void lower(string& s) {
 	}
 }
 
-string stripPunct(const string& s) {
+string stripPunct(const string& s)
+{
 
 	// Remove any single trailing
 	// punctuation character from a word.  

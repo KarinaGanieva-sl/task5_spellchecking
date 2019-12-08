@@ -17,11 +17,17 @@ class hash_function
 {
 public:
 
-    unsigned int operator()( const string& s )  const {
-        
-        
-        // Complete definition
-        
+    unsigned int operator()( const string& s )  const
+    {
+        unsigned int hash = 0;
+        int pow = 1;
+        const int p = 37;
+        for(int i = 0; i < s.length(); i++)
+        {
+            hash += s[i] * pow;
+            pow *= p;
+        }
+        return  hash;
     }
 };
 

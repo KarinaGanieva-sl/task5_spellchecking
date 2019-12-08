@@ -57,7 +57,6 @@ void HashSet<key_type,hash_func,key_equal>::insert(const key_type& k) {
     if (load_factor() > .7) {
         resize();
     }
-
     int pp = hf(k) % table_size();
     int p = pp;
 

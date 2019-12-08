@@ -35,6 +35,11 @@ protected:
     int resize();
     
 public:
+    void print()
+    {
+        for(int i = 0; i< ht->size(); i++)
+            std::cout<<(*ht)[i].key;
+    }
 // we do not compute prime numbers but use a table instead
 static const int num_primes;
 static const unsigned long prime_list[];
